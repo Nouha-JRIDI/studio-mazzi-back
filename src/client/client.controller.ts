@@ -79,12 +79,38 @@ export class ClientController {
     }
   }
   @Delete('/:id')
-  async deleteClient(@Res() response, @Param('id') ClientId: string) {
+  async softDeleteClient(@Res() response, @Param('id') ClientId: string) {
     try {
-      const deletedClient = await this.clientService.remove(ClientId);
+      const deletedClient = await this.clientService.softDeleteClient(ClientId);
       return response.status(HttpStatus.OK).send({
         message: 'Client deleted successfully',
         deletedClient,
+      });
+    } catch (err) {
+      return response.status(err.status).send(err.response);
+    }
+  }
+
+  @Delete('/delete/:id')
+  async deleteClient(@Res() response, @Param('id') ClientId: string) {
+    try {
+      const deletedClient = await this.clientService.deleteClient(ClientId);
+      return response.status(HttpStatus.OK).send({
+        message: 'Client deleted definitely successfully',
+        deletedClient,
+      });
+    } catch (err) {
+      return response.status(err.status).send(err.response);
+    }
+  }
+
+  @Put('/restore/:id')
+  async restoreClient(@Res() response, @Param('id') clientId: string) {
+    try {
+      const existingClient = await this.clientService.restoreClient(clientId);
+      return response.status(HttpStatus.OK).send({
+        message: 'Client has been successfully restored',
+        existingClient,
       });
     } catch (err) {
       return response.status(err.status).send(err.response);

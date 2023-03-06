@@ -1,6 +1,8 @@
-import { Document } from 'mongoose';
+import { Document, Types } from 'mongoose';
 
-export interface IClient extends Document{
+
+export interface IClient extends Document {
+
   readonly email: string;
 
   readonly CF: string;
@@ -37,4 +39,7 @@ export interface IClient extends Document{
   readonly partnerCF: string;
 
   readonly partnerSince: number;
+
+
+  readonly isDeleted :boolean;
 }

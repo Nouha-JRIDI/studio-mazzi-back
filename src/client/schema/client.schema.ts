@@ -40,6 +40,9 @@ export class Client {
   partnerCF: string;
   @Prop()
   partnerSince: number;
+
+  @Prop({ default: false })
+  isDeleted: boolean;
 }
 export const ClientSchema = SchemaFactory.createForClass(Client);
-SchemaFactory.createForClass(Client).plugin(softDeletePlugin);
+
